@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Learn more about Your Blog, our mission, and our team.">
+  <meta name="keywords" content="blog, about, mission, team">
+  <meta name="author" content="Your Blog">
+  <title>About - Your Blog</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <!-- Navigation -->
+  <header class="sticky-header">
+    <nav class="navbar" aria-label="Main navigation">
+      <div class="container">
+        <a href="{{ url_for('home') }}" class="logo" aria-label="Your Blog Home">
+          <img src="{{ url_for('static', filename='assets/logo.png') }}" alt="Your Blog Logo" class="logo-img">
+        </a>
+        <button class="nav-toggle" aria-controls="nav-menu" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="nav-toggle-icon"></span>
+        </button>
+        <ul class="nav-menu" id="nav-menu">
+          <li><a href="{{ url_for('home') }}" class="nav-link {% if request.endpoint == 'home' %}active{% endif %}">Home</a></li>
+          <li><a href="#categories" class="nav-link">Categories</a></li>
+          <li><a href="{{ url_for('about') }}" class="nav-link {% if request.endpoint == 'about' %}active{% endif %}">About</a></li>
+          <li><a href="#contact" class="nav-link">Contact</a></li>
+          <li><button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+            <i class="fas fa-moon"></i>
+          </button></li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <!-- About Section -->
+  <main class="container">
+    <section class="about" aria-label="About us">
+      <h1 class="section-title">About Your Blog</h1>
+      <div class="about-content">
+        <p>Hello, {{ name }}! Welcome to Your Blog, a platform dedicated to sharing insights on technology, culture, design, and lifestyle. Our mission is to inspire and inform our readers with well-researched, engaging content that explores the cutting edge of modern life.</p>
+        
+        <h2>Our Mission</h2>
+        <p>At Your Blog, we believe in the power of ideas to shape our future. We strive to cover topics that matter, presenting them in a thoughtful, accessible way that sparks curiosity and conversation. Our content aims to be both timely and timeless, offering perspectives that remain relevant beyond the news cycle.</p>
+        
+        <h2>Our Team</h2>
+        <div class="team-grid">
+          <div class="team-member">
+            <h3>John Doe</h3>
+            <p class="team-role">Technology Editor</p>
+            <p>John has over a decade of experience covering emerging technologies and their impact on society.</p>
+          </div>
+          <div class="team-member">
+            <h3>Jane Smith</h3>
+            <p class="team-role">Culture Writer</p>
+            <p>Jane brings a global perspective to her analysis of cultural trends and social movements.</p>
+          </div>
+          <div class="team-member">
+            <h3>Alex Brown</h3>
+            <p class="team-role">Design Contributor</p>
+            <p>Alex is a practicing UX designer who shares insights from the frontlines of digital product design.</p>
+          </div>
+          <div class="team-member">
+            <h3>Emma Wilson</h3>
+            <p class="team-role">Lifestyle Editor</p>
+            <p>Emma explores mindful approaches to living in our increasingly complex modern world.</p>
+          </div>
+        </div>
+        
+        <h2>Editorial Principles</h2>
+        <ul class="principles-list">
+          <li><strong>Accuracy:</strong> We verify facts and provide context to ensure our content is trustworthy.</li>
+          <li><strong>Independence:</strong> Our editorial decisions are made without external influence.</li>
+          <li><strong>Inclusivity:</strong> We seek diverse perspectives and aim to make our content accessible to all.</li>
+          <li><strong>Engagement:</strong> We value thoughtful dialogue and welcome reader feedback.</li>
+        </ul>
+        
+        <h2>Contact Us</h2>
+        <p>Have questions, feedback, or ideas? We'd love to hear from you. Reach out to us at <a href="mailto:contact@yourblog.com">contact@yourblog.com</a>.</p>
+        
+        <p>For media inquiries, please contact <a href="mailto:media@yourblog.com">media@yourblog.com</a>.</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3 class="footer-title">Your Blog</h3>
+          <p>© 2025 Your Blog. All rights reserved.</p>
+        </div>
+        <div class="footer-section">
+          <h3 class="footer-title">Quick Links</h3>
+          <ul class="footer-links">
+            <li><a href="{{ url_for('home') }}">Home</a></li>
+            <li><a href="{{ url_for('about') }}">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3 class="footer-title">Follow Us</h3>
+          <div class="social-links">
+            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

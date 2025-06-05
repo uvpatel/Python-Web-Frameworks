@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A modern blog featuring articles on technology, culture, design, and more.">
+  <meta name="keywords" content="blog, technology, culture, design, lifestyle">
+  <meta name="author" content="Your Blog Name">
+  <title>Your Blog - Home</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2 ව
+
+System: It looks like your message was cut off. I notice you're trying to integrate a Flask backend with the static blog website templates you provided earlier. Let me help you complete the integration by providing the updated templates (`index.html`, `about.html`, `post.html`) with Jinja2 for dynamic rendering, and explain how they work with your Flask `app.py`. I'll also address the questions raised earlier to ensure the solution aligns with your vision for a modern, responsive blog website.
+
+As a Socratic teacher, I'll guide you through the process with questions to deepen your understanding and refine the solution. Let’s complete the templates and explore how to make the site dynamic, scalable, and user-friendly.
+
+### Key Questions to Refine the Integration
+1. **Dynamic Data in Templates**: How should the `name="Urvil"` variable be used in the templates? For example, should it appear in a greeting (e.g., "Welcome, Urvil") or as the author name for posts? 
+2. **Blog Post Rendering**: The `app.py` includes a list of posts. Should `index.html` display all posts, or should we implement pagination (e.g., 3 posts per page)? How should posts be sorted (e.g., by date)?
+3. **Single Post Page**: The `/post/<int:post_id>` route fetches a specific post. Should `post.html` include additional features like related posts, a comments section, or social sharing buttons?
+4. **Navigation and UI**: Should the navigation bar highlight the active page (e.g., "Home" when on `/`)? Are there specific UI elements (e.g., a search bar, category dropdown) you’d like to add?
+5. **Assets and Performance**: The templates reference `assets/` for images. Should Flask serve these from `/static/assets/`? Do you want to optimize images (e.g., use WebP format, lazy-load)?
+6. **Future Scalability**: Are you planning to add a database (e.g., SQLite) for posts, or is the Python list sufficient? Should we structure the templates for easy CMS integration later?
+
+### Updated Templates with Jinja2
+Below are the updated templates, modified to use Jinja2 for dynamic rendering. They integrate with the `posts` data from `app.py` and maintain the responsive, SEO-friendly, and accessible design from your static site. I’ve incorporated the `name` variable in a greeting in the header for demonstration, but we can adjust this based on your preference.
+
+<xaiArtifact artifact_id="04f69e8c-b85d-4c60-8a6c-75e74d93dc3f" artifact_version_id="8565a75f-b577-4125-b609-7851e39a125d" title="templates/index.html" contentType="text/html">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A modern blog featuring articles on technology, culture, design, and more.">
+  <meta name="keywords" content="blog, technology, culture, design, lifestyle">
+  <meta name="author" content="Your Blog Name">
+  <title>Your Blog - Home</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <!-- Navigation -->
+  <header class="sticky-header">
+    <nav class="navbar" aria-label="Main navigation">
+      <div class="container">
+        <a href="{{ url_for('home') }}" class="logo" aria-label="Your Blog Home">
+          <img src="{{ url_for('static', filename='assets/logo.png') }}" alt="Your Blog Logo" class="logo-img">
+        </a>
+        <button class="nav-toggle" aria-controls="nav-menu" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="nav-toggle-icon"></span>
+        </button>
+        <ul class="nav-menu" id="nav-menu">
+          <li><a href="{{ url_for('home') }}" class="nav-link {% if request.endpoint == 'home' %}active{% endif %}">Home</a></li>
+          <li><a href="#categories" class="nav-link">Categories</a></li>
+          <li><a href="{{ url_for('about') }}" class="nav-link {% if request.endpoint == 'about' %}active{% endif %}">About</a></li>
+          <li><a href="#contact" class="nav-link">Contact</a></li>
+          <li><button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+            <i class="fas fa-moon"></i>
+          </button></li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero" aria-label="Featured content">
+    <div class="container">
+      <h1 class="hero-title">Welcome, {{ name }}!</h1>
+      <p class="hero-text">Explore our latest articles on technology, culture, and design.</p>
+      <a href="{{ url_for('post', post_id=1) }}" class="btn btn-primary">Read Featured Post</a>
+    </div>
+  </section>
+
+  <!-- Blog Posts -->
+  <main class="container">
+    <section class="blog-posts" aria-label="Blog posts">
+      <h2 class="section-title">Latest Posts</h2>
+      <div class="post-grid">
+        {% for post in posts %}
+        <article class="post-card">
+          <img src="{{ url_for('static', filename=post.image) }}" alt="{{ post.title }} image" class="post-img" loading="lazy">
+          <div class="post-content">
+            <span class="post-tag">{{ post.tag }}</span>
+            <h3 class="post-title"><a href="{{ url_for('post', post_id=post.id) }}">{{ post.title }}</a></h3>
+            <p class="post-meta">{{ post.date }} | {{ post.author }}</p>
+            <p class="post-summary">{{ post.summary }}</p>
+            <a href="{{ url_for('post', post_id=post.id) }}" class="post-link">Read More</a>
+          </div>
+        </article>
+        {% endfor %}
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3 class="footer-title">Your Blog</h3>
+          <p>© 2025 Your Blog. All rights reserved.</p>
+        </div>
+        <div class="footer-section">
+          <h3 class="footer-title">Quick Links</h3>
+          <ul class="footer-links">
+            <li><a href="{{ url_for('home') }}">Home</a></li>
+            <li><a href="{{ url_for('about') }}">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3 class="footer-title">Follow Us</h3>
+          <div class="social-links">
+            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

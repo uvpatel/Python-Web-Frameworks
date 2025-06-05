@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{{ post.summary if post else 'Read the latest blog post' }}">
+  <meta name="keywords" content="{{ post.tag if post else 'blog' }}, technology, culture, design">
+  <meta name="author" content="{{ post.author if post else 'Your Blog' }}">
+  <title>{{ post.title if post else 'Post Not Found' }} - Your Blog</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <!-- Navigation -->
+  <header class="sticky-header">
+    <nav class="navbar" aria-label="Main navigation">
+      <div class="container">
+        <a href="{{ url_for('home') }}" class="logo" aria-label="Your Blog Home">
+          <img src="{{ url_for('static', filename='assets/logo.png') }}" alt="Your Blog Logo" class="logo-img">
+        </a>
+        <button class="nav-toggle" aria-controls="nav-menu" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="nav-toggle-icon"></span>
+        </button>
+        <ul class="nav-menu" id="nav-menu">
+          <li><a href="{{ url_for('home') }}" class="nav-link {% if request.endpoint == 'home' %}active{% endif %}">Home</a></li>
+          <li><a href="#categories" class="nav-link">Categories</a></li>
+          <li><a href="{{ url_for('about') }}" class="nav-link {% if request.endpoint == 'about' %}active{% endif %}">About</a></li>
+          <li><a href="#contact" class="nav-link">Contact</a></li>
+          <li><button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+            <i class="fas fa-moon"></i>
+          </button></li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Blog Post -->
+  <main class="container">
+    {% if post %}
+    <article class="post-full" aria-label="Full blog post">
+      <header class="post-header">
+        <span class="post-tag">{{ post.tag }}</span>
+        <h1 class="post-title">{{ post.title }}</h1>
+        <p class="post-meta">{{ post.date }} | By <a href="#author">{{ post.author }}</a></p>
+        <img src="{{ url_for('static', filename=post.image) }}" alt="{{ post.title }} image" class="post-img" loading="lazy">
+      </header>
+      <section class="post-content">
+        {{ post.content | safe }}
+      </section>
+      <footer class="post-footer">
+        <div class="author-info">
+          <h3>About the Author</h3>
+          <p>{{ post.author }} is a contributor to Your Blog, specializing in {{ post.tag.lower() }} topics.</p>
+        </div>
+        <div class="share-post">
+          <h3>Share This Post</h3>
+          <div class="social-links">
+            <a href="#" aria-label="Share on Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="#" aria-label="Share on Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" aria-label="Share on LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+          </div>
+        </div>
+        <nav class="post-nav" aria-label="Post navigation">
+          <a href="{{ url_for('home') }}" class="btn btn-secondary">Back to Home</a>
+          {% if post.id < posts|length %}
+            <a href="{{ url_for('post', post_id=post.id+1) }}" class="btn btn-primary">Next Post</a>
+          {% endif %}
+        </nav>
+      </footer>
+    </article>
+    {% else %}
+    <section class="post-error" aria-label="Error message">
+      <h1 class="section-title">Post Not Found</h1>
+      <p>Sorry, the post you're looking for doesn't exist or may have been removed.</p>
+      <a href="{{ url_for('home') }}" class="btn btn-primary">Return to Home</a>
+    </section>
+    {% endif %}
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3 class="footer-title">Your Blog</h3>
+          <p>© 2025 Your Blog. All rights reserved.</p>
+        </div>
+        <div class="footer-section">
+          <h3 class="footer-title">Quick Links</h3>
+          <ul class="footer-links">
+            <li><a href="{{ url_for('home') }}">Home</a></li>
+            <li><a href="{{ url_for('about') }}">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3 class="footer-title">Follow Us</h3>
+          <div class="social-links">
+            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
