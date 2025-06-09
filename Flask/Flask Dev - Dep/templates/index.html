@@ -53,9 +53,7 @@
                 </li>
               </ul>
             </li>
-            <li class="nav-item">
-                <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-            </li>
+            
         </ul>
     </nav>
     <br>
@@ -97,6 +95,12 @@
 
 <div class="container">
 <h2>Your To'Do</h2>
+
+ {% if allTodo|length == 0 %}
+ <div class="alert alert-dark" role="alert">
+                    No Todos found. Add your first todo now!
+                  </div>
+   {% else %} 
     <table class="table">
         <thead>
             <tr>
@@ -108,26 +112,31 @@
             </tr>
         </thead>
         <tbody>
-            {% for todo in allTodo %}
-    <tr>
-        <td>{{ loop.index }}</td>
-        <td>{{ todo.title }}</td>
-        <td>{{ todo.desc }}</td>
-        <td>{{ todo.date_created }}</td>
-       <div>
 
-         <td>
-           <a href="/delete/{{ todo.snow }}" class="btn btn-success btn-sm me-2">Success</a>
-           <a href="/update/{{ todo.snow }}" class="btn btn-success btn-sm me-2">New Task</a>
-          </div>
-</td>
+       
+          
+          {% for todo in allTodo %}
+          <tr>
+            <th scope="row">{{ loop.index }}</th>
+            <td>{{ todo.title }}</td>
+            <td>{{ todo.desc }}</td>
+            <td>{{ todo.date_created }}</td>
+            <div>
+              
+              <td>
+                <a href="/update/{{todo.sno}}" type="button" class="btn btn-outline-dark btn-sm mx-1">Task</a>
+                <a href="/delete/{{todo.sno}}" type="button" class="btn btn-outline-dark btn-sm mx-1">Success</a>   
+                  
+              </td>
+              
+                </tr>
+              </tbody>
+            </table>
 
-      </tr>
-{% endfor %}
+            {% endfor %}
+            {% endif %}
+
             
-        </tbody>
-    </table>
-    
 </div>
     
 

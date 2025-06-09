@@ -27,3 +27,5 @@ def products():
  # manage routes perfacts
 
 ```
+
+# Templete inheritance in Jinja
