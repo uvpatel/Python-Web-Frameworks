@@ -29,3 +29,6 @@ def products():
 ```
 
 # Templete inheritance in Jinja
+
+- i want to do about to convert about us in 10 page. but templet inheritance is savior.so we make a base templet.we put common part in base.html
+
