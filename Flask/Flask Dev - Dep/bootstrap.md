@@ -1,0 +1,1 @@
+container-fluid take full width and container take width needed.
